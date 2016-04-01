@@ -26,6 +26,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
@@ -131,9 +133,10 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
     }
 
     @Override
-    public View getView() {
-        return webView;
-    }
+    public View getView() { return webView; }
+
+    @Override
+    public WebSettings getSettings() { return webView.getSettings(); }
 
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings("deprecation")
@@ -202,6 +205,10 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
         settings.setGeolocationEnabled(true);
         
         // Enable AppCache
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        checkConnection();
+
         // Fix for CB-2282
         settings.setAppCacheMaxSize(5 * 1048576);
         settings.setAppCachePath(databasePath);
@@ -330,5 +337,22 @@ public class SystemWebViewEngine implements CordovaWebViewEngine {
                 Log.e(TAG, "Error unregistering configuration receiver: " + e.getMessage(), e);
             }
         }
+    }
+
+    private void checkConnection() {
+
+        boolean isConnected = false;
+        ConnectivityManager check = (ConnectivityManager) cordova.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (check != null) {
+
+            NetworkInfo activeNetworkInfo = check.getActiveNetworkInfo();
+            isConnected = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+
+            if(!isConnected) {
+                webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ONLY);
+            }
+
+        }
+
     }
 }

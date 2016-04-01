@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.webkit.WebChromeClient.CustomViewCallback;
+import android.webkit.WebSettings;
 
 /**
  * Main interface for interacting with a Cordova webview - implemented by CordovaWebViewImpl.
@@ -38,6 +39,8 @@ public interface CordovaWebView {
     boolean isInitialized();
 
     View getView();
+
+    WebSettings getSettings();
 
     void loadUrlIntoView(String url, boolean recreatePlugins);
 
