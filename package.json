@@ -1,5 +1,5 @@
 {
-    "name": "cordova-android",
+    "name": "cordova-android-previewer",
     "version": "4.1.1",
     "description": "cdv-siberian-android",
     "main": "bin/create",
