@@ -211,8 +211,6 @@ exports.createProject = function(project_path, package_name, project_name, activ
     var activity_path   = path.join(activity_dir, safe_activity_name + '.java');
     var target_api      = check_reqs.get_target();
     var manifest_path   = path.join(project_path, 'AndroidManifest.xml');
-    // @siberian, copying Login.java
-    var login_path   = path.join(project_path, 'src', 'com', 'previewer', 'previewer');
 
     // Check if project already exists
     if(fs.existsSync(project_path)) {
@@ -252,10 +250,6 @@ exports.createProject = function(project_path, package_name, project_name, activ
             shell.sed('-i', /__ACTIVITY__/, safe_activity_name, activity_path);
             shell.sed('-i', /__NAME__/, project_name, path.join(project_path, 'res', 'values', 'strings.xml'));
             shell.sed('-i', /__ID__/, package_name, activity_path);
-
-            // @siberian, copying Login.java
-            shell.mkdir('-p', login_path);
-            shell.cp('-f', path.join(project_template_dir, 'Login.java'), login_path);
 
             shell.cp('-f', path.join(project_template_dir, 'AndroidManifest.xml'), manifest_path);
             shell.sed('-i', /__ACTIVITY__/, safe_activity_name, manifest_path);
