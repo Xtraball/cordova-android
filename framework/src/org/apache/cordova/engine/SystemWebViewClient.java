@@ -53,7 +53,7 @@ import java.util.Hashtable;
 /**
  * This class is the WebViewClient that implements callbacks for our web view.
  * The kind of callbacks that happen here are regarding the rendering of the
- * document instead of the chrome surrounding it, such as onPageStarted(), 
+ * document instead of the chrome surrounding it, such as onPageStarted(),
  * shouldOverrideUrlLoading(), etc. Related to but different than
  * CordovaChromeClient.
  */
@@ -63,6 +63,8 @@ public class SystemWebViewClient extends WebViewClient {
     protected final SystemWebViewEngine parentEngine;
     private boolean doClearHistory = false;
     boolean isCurrentlyLoading;
+
+    public static String[] url_array;
 
     /** The authorization tokens. */
     private Hashtable<String, AuthenticationToken> authenticationTokens = new Hashtable<String, AuthenticationToken>();
@@ -81,25 +83,7 @@ public class SystemWebViewClient extends WebViewClient {
      */
 	@Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        Integer previewer = view.getResources().getIdentifier("previewer", "id", view.getContext().getPackageName());
-        Boolean result = parentEngine.client.onNavigationAttempt(url);
-
-        if(previewer != 0) {
-            try {
-                Activity main = (Activity) view.getContext();
-                Method getHost = main.getClass().getDeclaredMethod("getHost");
-                String host = (String) getHost.invoke(main);
-                if(url.contains(host)) {
-                    return false;
-                }
-            } catch (NoSuchMethodException e) {}
-            catch (IllegalAccessException e) {}
-            catch (InvocationTargetException e) {}
-        }
-
-        return result;
-
-
+        return parentEngine.client.onNavigationAttempt(url);
     }
 
     /**
@@ -126,7 +110,7 @@ public class SystemWebViewClient extends WebViewClient {
         // By default handle 401 like we'd normally do!
         super.onReceivedHttpAuthRequest(view, handler, host, realm);
     }
-    
+
     /**
      * On received client cert request.
      * The method forwards the request to any running plugins before using the default implementation.
@@ -163,6 +147,9 @@ public class SystemWebViewClient extends WebViewClient {
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         isCurrentlyLoading = true;
+
+        view.loadUrl("javascript:DOMAIN = \"" + url_array[0] + "//" + url_array[2] + "\"; APP_KEY = \"" + url_array[3] + "\"; var BASE_PATH = \"/\" + APP_KEY; console.log(MABITE);");
+
         // Flush stale messages & reset plugins.
         parentEngine.bridge.reset();
         parentEngine.client.onPageStarted(url);
@@ -193,6 +180,7 @@ public class SystemWebViewClient extends WebViewClient {
                 ProgressDialog dialog = (ProgressDialog) getDialog.invoke(mainForDialog);
                 dialog.dismiss();
 
+                view.loadUrl("javascript:var IS_PREVIEWER = true;");
             } catch (NoSuchMethodException e) {}
             catch (IllegalAccessException e) {}
             catch (InvocationTargetException e) {}

@@ -19,31 +19,25 @@
 
 package __ID__;
 
-import com.previewer.previewer.Login;
-
-import android.content.Context;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
 public class __ACTIVITY__ extends CordovaActivity
 {
+    public ProgressDialog dialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        Integer previewer = getResources().getIdentifier("previewer", "id", getPackageName());
-        if(previewer != 0) {
-            /** @Previewer. */
-            Context context = getApplicationContext();
-            Intent intent = new Intent(context, Login.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        dialog = ProgressDialog.show(MainActivity.this, "", this.getApplicationContext().getString(R.string.load_message_app), true);
 
-            context.startActivity(intent);
-        } else {
-            loadUrl(launchUrl);
-        }
+        loadUrl(launchUrl);
+    }
 
+    public ProgressDialog getDialog() {
+        return dialog;
     }
 }
