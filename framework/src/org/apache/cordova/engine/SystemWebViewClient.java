@@ -19,8 +19,6 @@
 package org.apache.cordova.engine;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -28,7 +26,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
-import android.util.Log;
 import android.webkit.ClientCertRequest;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
@@ -45,8 +42,6 @@ import org.apache.cordova.PluginManager;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Hashtable;
 
 
@@ -81,25 +76,7 @@ public class SystemWebViewClient extends WebViewClient {
      */
 	@Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        Integer previewer = view.getResources().getIdentifier("previewer", "id", view.getContext().getPackageName());
-        Boolean result = parentEngine.client.onNavigationAttempt(url);
-
-        if(previewer != 0) {
-            try {
-                Activity main = (Activity) view.getContext();
-                Method getHost = main.getClass().getDeclaredMethod("getHost");
-                String host = (String) getHost.invoke(main);
-                if(url.contains(host)) {
-                    return false;
-                }
-            } catch (NoSuchMethodException e) {}
-            catch (IllegalAccessException e) {}
-            catch (InvocationTargetException e) {}
-        }
-
-        return result;
-
-
+        return parentEngine.client.onNavigationAttempt(url);
     }
 
     /**
@@ -184,19 +161,6 @@ public class SystemWebViewClient extends WebViewClient {
             return;
         }
         isCurrentlyLoading = false;
-
-        Integer previewer = view.getResources().getIdentifier("previewer", "id", view.getContext().getPackageName());
-        if(previewer != 0) {
-            try {
-                Activity mainForDialog = (Activity) view.getContext();
-                Method getDialog = mainForDialog.getClass().getDeclaredMethod("getDialog");
-                ProgressDialog dialog = (ProgressDialog) getDialog.invoke(mainForDialog);
-                dialog.dismiss();
-
-            } catch (NoSuchMethodException e) {}
-            catch (IllegalAccessException e) {}
-            catch (InvocationTargetException e) {}
-        }
 
         /**
          * Because of a timing issue we need to clear this history in onPageFinished as well as

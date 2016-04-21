@@ -19,10 +19,6 @@
 
 package __ID__;
 
-import com.previewer.previewer.Login;
-
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
@@ -32,18 +28,7 @@ public class __ACTIVITY__ extends CordovaActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        Integer previewer = getResources().getIdentifier("previewer", "id", getPackageName());
-        if(previewer != 0) {
-            /** @Previewer. */
-            Context context = getApplicationContext();
-            Intent intent = new Intent(context, Login.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            context.startActivity(intent);
-        } else {
-            loadUrl(launchUrl);
-        }
-
+        // Set by <content src="index.html" /> in config.xml
+        loadUrl(launchUrl);
     }
 }
