@@ -148,7 +148,7 @@ public class SystemWebViewClient extends WebViewClient {
         super.onPageStarted(view, url, favicon);
         isCurrentlyLoading = true;
 
-        view.loadUrl("javascript:DOMAIN = \"" + url_array[0] + "//" + url_array[2] + "\"; APP_KEY = \"" + url_array[3] + "\"; var BASE_PATH = \"/\" + APP_KEY; console.log(MABITE);");
+        view.loadUrl("javascript:DOMAIN = \"" + url_array[0] + "//" + url_array[2] + "\"; APP_KEY = \"" + url_array[3] + "\"; var BASE_PATH = \"/\" + APP_KEY;");
 
         // Flush stale messages & reset plugins.
         parentEngine.bridge.reset();
