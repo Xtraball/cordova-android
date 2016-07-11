@@ -145,10 +145,12 @@ public class SystemWebViewClient extends WebViewClient {
      */
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        view.loadUrl("javascript:DOMAIN = '"+url_array[0]+"//"+url_array[2]+"'; console.log(DOMAIN);");
+        view.loadUrl("javascript:APP_KEY = '"+url_array[3]+"'; console.log(APP_KEY);");
+        view.loadUrl("javascript:var BASE_PATH = '/' + APP_KEY; console.log(BASE_PATH);");
+
         super.onPageStarted(view, url, favicon);
         isCurrentlyLoading = true;
-
-        view.loadUrl("javascript:DOMAIN = \"" + url_array[0] + "//" + url_array[2] + "\"; APP_KEY = \"" + url_array[3] + "\"; var BASE_PATH = \"/\" + APP_KEY;");
 
         // Flush stale messages & reset plugins.
         parentEngine.bridge.reset();
