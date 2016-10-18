@@ -19,16 +19,25 @@
 
 package __ID__;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
 public class __ACTIVITY__ extends CordovaActivity
 {
+    public ProgressDialog dialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        // Set by <content src="index.html" /> in config.xml
+
+        dialog = ProgressDialog.show(MainActivity.this, "", this.getApplicationContext().getString(R.string.load_message_app), true);
+
         loadUrl(launchUrl);
+    }
+
+    public ProgressDialog getDialog() {
+        return dialog;
     }
 }
