@@ -20,6 +20,7 @@ package org.apache.cordova;
 
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebSettings;
 
 /**
  * Interface for all Cordova engines.
@@ -34,6 +35,7 @@ public interface CordovaWebViewEngine {
     CordovaWebView getCordovaWebView();
     ICordovaCookieManager getCookieManager();
     View getView();
+    WebSettings getSettings();
 
     void loadUrl(String url, boolean clearNavigationStack);
 
