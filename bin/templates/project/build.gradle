@@ -254,6 +254,7 @@ android {
 
 dependencies {
     // compile fileTree(dir: 'libs', include: '*.jar')
+    compile files('libs/cordova-generic-ad.jar')
     // SUB-PROJECT DEPENDENCIES START
     // SUB-PROJECT DEPENDENCIES END
 }
