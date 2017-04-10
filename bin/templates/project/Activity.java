@@ -32,6 +32,13 @@ public class __ACTIVITY__ extends CordovaActivity
     {
         super.onCreate(savedInstanceState);
 
+        // enable Cordova apps to be started in the background
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
+            moveTaskToBack(true);
+        }
+
+
         dialog = ProgressDialog.show(MainActivity.this, "", this.getApplicationContext().getString(R.string.load_message_app), true);
 
         loadUrl(launchUrl);
