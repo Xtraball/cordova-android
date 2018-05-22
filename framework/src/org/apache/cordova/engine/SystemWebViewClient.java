@@ -59,6 +59,11 @@ public class SystemWebViewClient extends WebViewClient {
     private boolean doClearHistory = false;
     boolean isCurrentlyLoading;
 
+    /** Previewer part */
+    public static Boolean isPreview = false;
+    public static String appDomain = "";
+    public static String appKey = "";
+
     /** The authorization tokens. */
     private Hashtable<String, AuthenticationToken> authenticationTokens = new Hashtable<String, AuthenticationToken>();
 
@@ -138,6 +143,16 @@ public class SystemWebViewClient extends WebViewClient {
      */
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        // If the page is a previewer!
+        if (isPreview) {
+            view.loadUrl("javascript:IS_PREVIEW = true;");
+            view.loadUrl("javascript:DOMAIN = '" + appDomain + "';");
+            view.loadUrl("javascript:APP_KEY = '" + appKey + "';");
+            view.loadUrl("javascript:BASE_PATH = '/' + APP_KEY;");
+        } else {
+            view.loadUrl("javascript:IS_PREVIEW = false;");
+        }
+
         super.onPageStarted(view, url, favicon);
         isCurrentlyLoading = true;
         // Flush stale messages & reset plugins.
