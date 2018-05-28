@@ -157,6 +157,12 @@ task cdvPrintProps << {
 }
 
 android {
+    // This excludes the need for custom build.gradle in plugins we will use only <lib-file />
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 
     defaultConfig {
         versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
