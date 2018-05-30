@@ -147,13 +147,13 @@ public class SystemWebViewClient extends WebViewClient {
         if (isPreview) {
             // We use a setTimeout to ensure values are set first and cordova wait for them,
             // these are mandatory in the process!
-            String javascript = "setTimeout(function () { " +
+            String javascript = "javascript:setTimeout(function () { " +
                     "IS_PREVIEW = true;" +
                     "DOMAIN = '" + appDomain + "';" +
                     "APP_KEY = '" + appKey + "';" +
                     "BASE_PATH = '/' + APP_KEY; }, 1);";
 
-            view.loadUrl("javascript:" + javascript);
+            view.loadUrl(javascript);
         } else {
             view.loadUrl("javascript:setTimeout(function () { IS_PREVIEW = false; }, 1);");
         }
