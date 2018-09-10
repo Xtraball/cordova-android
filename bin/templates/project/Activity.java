@@ -22,6 +22,9 @@ package __ID__;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
+// Clear temp files on startup! @siberian
+import java.io.File;
+
 public class __ACTIVITY__ extends CordovaActivity
 {
     @Override
@@ -35,7 +38,32 @@ public class __ACTIVITY__ extends CordovaActivity
             moveTaskToBack(true);
         }
 
+        // Clear temp files on startup! @siberian
+        deleteTempFiles(getCacheDir());
+
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
+    }
+
+    /**
+     * @description siberian
+     *
+     * @param file
+     * @return
+     */
+    private boolean deleteTempFiles(File file) {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    if (f.isDirectory()) {
+                        deleteTempFiles(f);
+                    } else {
+                        f.delete();
+                    }
+                }
+            }
+        }
+        return file.delete();
     }
 }
