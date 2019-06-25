@@ -82,6 +82,7 @@ AndroidManifest.prototype.getActivity = function () {
             } else {
                 activity.attrib['android:screenOrientation'] = orientation;
             }
+
             return this;
         },
         getLaunchMode: function () {

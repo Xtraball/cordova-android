@@ -2,7 +2,7 @@ environment:
     ANDROID_HOME: "C:\\android"
 
     # If the gradle daemon is used, the build hangs after generating the wrapper
-    GRADLE_OPTS: -Dorg.gradle.daemon=false
+    GRADLE_OPTS: -Dorg.gradle.daemon=true
 
     # URL for SDK Tools, Revision 26.1.1 (September 2017)
     SDK_TOOLS_URL: https://dl.google.com/android/repository/sdk-tools-windows-4333796.zip

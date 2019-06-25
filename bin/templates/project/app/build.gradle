@@ -25,9 +25,9 @@ buildscript {
         google()
         jcenter()
         maven {
-                    url 'https://maven.google.com/'
-                    name 'Google'
-                }
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 
     dependencies {
@@ -177,6 +177,11 @@ android {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
+    }
+
+    dexOptions {
+        javaMaxHeapSize "8G"
+        preDexLibraries = false
     }
 
     defaultConfig {
