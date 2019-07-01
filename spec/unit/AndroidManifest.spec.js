@@ -51,7 +51,6 @@ describe('AndroidManifest', () => {
             </intent-filter>
         </activity>
     </application>
-    <uses-sdk android:minSdkVersion="${MIN_SDK_VERSION}" android:maxSdkVersion="${MAX_SDK_VERSION}" android:targetSdkVersion="${TARGET_SDK_VERSION}" />
 </manifest>`;
 
     const manifestPath = path.join(os.tmpdir(), `AndroidManifest${Date.now()}.xml`);
