@@ -36,6 +36,7 @@
         <activity android:name="__ACTIVITY__"
                   android:screenOrientation="unspecified"
                 android:label="@string/activity_name"
+                android:screenOrientation="unspecified"
                 android:launchMode="singleTop"
                 android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
                 android:windowSoftInputMode="adjustResize"
